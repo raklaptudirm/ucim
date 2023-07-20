@@ -94,8 +94,8 @@ limit flags.
 
 `infinite`, `ponder`, and `wtime and others` are search type flags.
 
-- `infinite` should start an infinite search, where the search doesn't exit till the `stop` command, even when mate is found.
-- `ponder` should start a ponder search, where search exits on the `ponderhit` command.
+- `infinite` should start an infinite search, where the search doesn't exit till the <kbd>stop</kbd> command, even when mate is found.
+- `ponder` should start a ponder search, where search exits on the <kbd>ponderhit</kbd> command.
 - `wtime and others` should start a normal time bound search.
   - `wtime` and `btime` are the time remaining in milliseconds for white and black respectively.
   - `winc` and `binc` are the increments per moves for white and black respectively.
