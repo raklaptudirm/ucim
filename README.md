@@ -45,50 +45,76 @@ UCiM also adds specifications for important things that UCI doesn't handle, like
 - A fixed number of arguments are specified using the syntax `<<description>>...<n>`, where n is the number of arguments. For example: `fen <fen>...6`.
 - Variadic flags may only be present as the last flag in the command. All tokens following the variadic flag are consumed as its arguments. They are specified using the syntax `<<description>>...`. For example: `moves <move>...`
 
-## Commands: GUI to Engine
+# Commands: GUI to Engine
 
-### <samp> uci </samp>
+## <samp> uci </samp>
+
+```
+uci
+```
+
 Tells the engine to switch to UCIM mode. The command name has been kept consistent with the UCI standard so that UCIM is backwards compatible.
 
 After receiving the <kbd>uci</kbd> command, an engine **must** identify itself with the <kbd>id</kbd> command.
 
 After completing any necessary setup steps, the engine should send the <kbd>uciok</kbd> command to indicate that it is ready to be used.
 
-------
 
-### <samp> isready </samp>
+## <samp> isready </samp>
+
+```
+isready
+```
+
 Used to synchronize the GUI with the engine. This command is usually sent when the GUI has assigned the engine with a time-consuming task and needs to wait for it to finish. This command can also check if an engine is still alive.
 
 The engine must answer the <kbd>isready</kbd> command with <kbd>readyok</kbd> as soon as it's ready to receive and parse commands, including when it's searching.
 
-------
 
-### <samp> setoption name <name> [ value &lt;value&gt;... ] </samp>
+## <samp> setoption </samp>
+
+```
+setoption name <name> [ value <value>... ]
+```
+
 Tells the engine to set one of its internal parameters named `name` to `value`. The `value` flag can be dropped when setting a boolean option.
 
 The name of the option **must** be a single token.
 
 `value` can consist of multiple tokens only in the case of a `string` option.
 
-------
 
-### <samp> ucinewgame </samp>
+## <samp> ucinewgame </samp>
+
+```
+ucinewgame
+```
+
 Used to signal to the engine that the next position is from a different game compared to the current position.
 
 The GUI **must** send this command when sending a position from a new game, and thus engines can depend on this command.
 
 The engine may spend some time setting up after receiving this command, so the GUI **must** send an <kbd>isready</kbd> command following this.
 
-------
 
-### <samp> position ( fen &lt;fen&gt;...6 | startpos ) [ moves &lt;move&gt;... ] </samp>
+## <samp> position </samp>
+
+```
+position ( fen <fen>...6 | startpos ) [ moves <move>... ]
+```
+
 Sets up the given position in the engine's internal board. First, the given fen is setup, and then the provided moves are
 played in the given order. `startpos` is equivalent to `fen rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1`
 The GUI **MUST** send this command before setting up a position from a new game.
 
-------
 
-### <samp> go [ infinite | ponder | wtime &lt;wtime&gt; btime &lt;btime&gt; [ winc &lt;winc&gt; binc &lt;binc&gt; ] [ movestogo &lt;movestogo&gt; ] ] [ depth &lt;maxdepth&gt; ] [ nodes &lt;maxnodes&gt; ] [ mate &lt;mateinx&gt; ] [ movetime &lt;movetime&gt; ] [ searchmoves &lt;move&gt;... ]</samp>
+## <samp> go </samp>
+
+```
+go [ infinite | ponder | wtime <wtime> btime <btime> [ winc <winc> binc <binc> ] [ movestogo <movestogo> ] ]
+   [ depth <maxdepth> ] [ nodes <maxnodes> ] [ mate <mateinx> ] [ movetime <movetime> ] [ searchmoves <move>... ]
+```
+
 Start calculating on the current internal position. Provided flags can be separated into two types, search type flags, and
 limit flags.
 
@@ -110,17 +136,29 @@ limit flags.
 - `movetime` sets the time to be used for searching. Search should exit on exceeding the allocated time.
 - `searchmoves` sets the move searching limits. Only the provided moves should be searched at root.
 
-------
 
-### <samp> stop </samp>
+## <samp> stop </samp>
+
+```
+stop
+```
+
 Stops calculating as soon as possible. <kbd>bestmove</kbd> command is sent on exit.
 
-------
 
-### <samp> ponderhit </samp>
+## <samp> ponderhit </samp>
+
+```
+ponderhit
+```
+
 Opponent has played the move the engine was pondering on. Switch to a normal search from the ponder search.
 
-------
 
-### <samp> quit </samp>
+## <samp> quit </samp>
+
+```
+quit
+```
+
 Quit the program as soon as possible.
