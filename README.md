@@ -1,3 +1,27 @@
+# Foreword
+UCI protocol is the most popular protocol used by chess engines to communicate with GUIs. However, it has been the opinion of
+a lot of engine developers that the protocol is one of the worst software communication protocols ever drafted. Some of the
+biggest issues with UCI is fuzzy command matching, optional commands, and garantees of statelessness when it isn't in any way
+stateless. In fact, a stateless protocol is an **extremely** bad idea for a chess engine.
+
+However, due to the enormous userbase of the protocol, switching over to a better protocol is a herculean task. There is also
+the issue of standard proliferation, and creation of GUIs supporting the new standard.
+
+<div align="center">
+  <a href="https://xkcd.com/927/">
+    <img src="https://imgs.xkcd.com/comics/standards.png">
+  </a>
+</div>
+
+Therefore UCiM tries to improve upon the UCI protocol, trying to remain backwards compatible wherever possible. However
+all the bad design decisions are not supported, so something like `joho go` is no longer a valid command, even though
+the <kbd>go</kbd> command is supported by UCiM. Most of the places where the backwards compatibility garuntee is broken,
+the new version is the de facto standard used by the community. For example, no popular GUI exploits the fuzzy command
+matching of UCI and sends commands like `joho debug on`. Therefore, most engines should already be UCiM compliant to a
+high percentage.
+
+UCiM also adds specifications for important things that UCI doesn't handle, like error reporting.
+
 # Description of the UCIM Standard
 - Specification is independent of Operating System.
 - All communication is done by the standard input and output streams.
